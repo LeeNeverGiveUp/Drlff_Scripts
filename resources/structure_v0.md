@@ -1,5 +1,5 @@
 # Module Definatioin #
-## DNV wrapper for OpenAi gym ##
+## 1. DNV wrapper for OpenAi gym ##
 This wrapper is for OpenAi gym for testing DQN in a easy way.  
 The aim of this wrapper is to make it compatible with LAMMPS Force Field Environment.
 
@@ -11,7 +11,7 @@ The aim of this wrapper is to make it compatible with LAMMPS Force Field Environ
 - env.step(act) => state, reward, done, message
 - env.render()
 
-## LAMMPS Force Field Environment ##
+## 2. LAMMPS Force Field Environment ##
 This is a wrapped API for training DQN, similar to OpenAI gym.
 
 ### Planned to Implement: ###
@@ -24,7 +24,7 @@ This is a wrapped API for training DQN, similar to OpenAI gym.
 - env.play() (a wrapper for step, easier to use in training)
 - env.io (json, yaml, LAMMPS compatible force field file)
 
-## DQN Optimizer ##
+## 3. DQN Optimizer ##
 - 省略
 
 # Process #
