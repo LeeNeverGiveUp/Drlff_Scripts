@@ -1,5 +1,5 @@
 # Module Definatioin #
-## 1. DNV wrapper for OpenAi gym ##
+## 1. ENV wrapper for OpenAi gym ##
 This wrapper is for OpenAi gym for testing DQN in a easy way.  
 The aim of this wrapper is to make it compatible with LAMMPS Force Field Environment.
 
