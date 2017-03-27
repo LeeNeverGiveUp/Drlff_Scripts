@@ -1,8 +1,8 @@
 # DQNFF #
 
-A Force Field Optimizer Using DQN
+A Force Field Optimizer Using Deep Reinforcement Learning
 
-This Project is to Optimize Force Field Using DQN and LAMMPS with Python.
+This Project is to Optimize Force Field Using Deep RL and ReaxFF with Python.
 
 * Version 0.0.1
 
@@ -10,4 +10,5 @@ This Project is to Optimize Force Field Using DQN and LAMMPS with Python.
 
 * Python3.5
 * LAMMPS
-* TensorFlow 0.12 or upper
+* ReaxFF
+* TensorFlow 1.0 or upper
