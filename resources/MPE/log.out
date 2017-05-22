@@ -1,0 +1,67 @@
+GARFfield force field parameter optimization framework, version 1.0
+(c) Andres Jaramillo-Botero, ajaramil@caltech.edu (Caltech, 2010-2014)
+
+1. DEFAULT SETTINGS
+== GA specific ==
+  -i='range' (Parameter interval)
+  -s='maxiter' (Stopping criteria)
+  -t=400 (Maximum GA iterations)
+  -p=100 (GA Population size)
+  -g='SSGA' (Population replacement strategy, steady-state with 10 percent population size replacement)
+  -z=10 (SSGA population replacement percent)
+  Mutation only (use -x to apply mutation and crossover operations)
+  -m=1/5 (Mutation rate)
+  -o=0.85 (Crossover rate = 0.85)
+
+== Others ==
+  -F='reaxc' (Force field)
+  -I=500 (structure minimization steps)
+  No hillclimbing (-c)
+  No logfile (use -l to write a logfile)
+  Energy minimization (use -f to use RMS force criterion instead)
+  -e=MPE (Mean Percent Error)
+  -d=None (Debug mode)
+  -r=10 (Report period, in GA iterations)
+  -u='electron' for eFF-ECP and 'real' otherwise (Units)
+  Use regular Qeq/EEM solver for ReaxFF charges
+  No low-gradient van der Waals correction (only reax/c)
+  No periodic write of best force field (-w)
+  Default to no Conjugate Gradient minimization in parabolic minima well (-G)
+  Default structure optimization method is CG (-M)
+  Fixed weights in training file (-W) 
+  No mincap or safezone memory allocation in reax/c calculations (-S)
+  No restarts (-R)
+== User changes to default settings ==
+>> -c = 50 (Use hillclimbing)
+
+2. READING REAXFF FORCE FIELD FILE: ffield ... 
+
+
+
+
+
+>> Read in 738 parameters from ffield
+
+3. READING MOLECULAR GEOMETRY FILE: geo.new (bgf or xyz formats) ... 
+>> Found 29 structures in geo.new
+>> Found 29 restraints in geo.new
+>> Finished reading structures from geo.new
+>> Found 29 structures in geo.new
+
+4. READING TRAINING SET FILE: trainset.in.new... 
+WARNING: No valid charge training set data read from trainset.in.new.0!
+WARNING: No valid cell training set data read from trainset.in.new.0!
+WARNING: No valid cell stress training set data read from trainset.in.new.0!
+WARNING: No valid structure training set data read from trainset.in.new.0!
+WARNING: No valid rms force training set data read from trainset.in.new.0!
+WARNING: No valid atomic force training set data read from trainset.in.new.0!
+>> Finished reading training set file trainset.in.new
+>> There are 29 training cases in file trainset.in.new
+
+5. READING PARAMETERS FILE: params ...
+>> Finished reading parameters to optimize from file params
+>> Read 5 parameters from params
+6. START GA OPTIMIZATION (hill-climbing mode) ... good luck !!
+Iter #     Field      Index          Value      
+0          Init       0              1.81327
+10         Best       0              1.84721
