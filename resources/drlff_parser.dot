@@ -1,0 +1,11 @@
+digraph drlff{
+    start -> is_head[label="not nothead"]
+    is_head -> "store head, i++"[label=Y]
+    is_head -> is_annotation[label=N]
+    is_annotation -> "store annotation, i++"[label=Y]
+    is_annotation -> is_sep[label=N]
+    is_sep -> "next is sep?"[label=Y]
+    "next is sep?" -> "next is sep?"[label=Y]
+    is_sep -> isbody[label=N]
+    "next is sep?" -> isbody[label=N]
+}
