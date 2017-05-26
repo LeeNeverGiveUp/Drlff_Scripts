@@ -26,22 +26,22 @@ class ffield(object):
             data = f.readlines()
 
         ishead = True
-        for i in data:
-            if ishead and not re.match(self.nothead, i):
-                self.parsed['head'].append(i)
+        for index, line in enumerate(data):
+            if ishead and not re.match(self.nothead, line):
+                self.parsed['head'].append(line)
             else:
                 ishead = False
-                if re.match(self.annotation, i):
-                    self.parsed['annotation'].append[i]
+                if re.match(self.annotation, line):
+                    self.parsed['annotation'].append((index, line))
                 else:
-                    if re.match(self.sep, i):
-                        self.parsed['separter'].append[i]
+                    if re.match(self.sep, line):
+                        self.parsed['separter'].append([line])
                         self.parsed['data'].append([])
                     else:
-                        if len(self.parsed['data'][-1]) == 0 and not re.match('\s*-?\d|\s*[A-Z][a-z]?\s+-?\d+\.\d+', i):
-                            self.parsed['separter'][-1].append(i)
+                        if len(self.parsed['data'][-1]) == 0 and not re.match('\s*-?\d|\s*[A-Z][a-z]?\s+-?\d+\.\d+', line):
+                            self.parsed['separter'][-1].append(line)
                         else:
-                            self.parsed['data'][-1].append(i)
+                            self.parsed['data'][-1].append(line.strip().split())
 
 
 def main():
@@ -52,5 +52,3 @@ f = ffield('ffield')
 
 if __name__ == '__main__':
     main()
-)
-)
