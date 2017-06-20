@@ -43,12 +43,3 @@ class ffield(object):
                         else:
                             self.parsed['data'][-1].append(line.strip().split())
 
-
-def main():
-    import conf
-
-f = ffield('ffield')
-
-
-if __name__ == '__main__':
-    main()
