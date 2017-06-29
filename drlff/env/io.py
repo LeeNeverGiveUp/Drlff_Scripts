@@ -82,6 +82,33 @@ class ffield(object):
         self.parsed['data'] = seped
 
 
+def find(a, b, c, data = ff.parsed['data']):
+    block = data[a - 1][b-1] # return a-1, b-1, j, k for block[j][k]
+    print('block',block)
+    lines = len(block)
+    i, j = [0] * 2
+    found_flag = False
+    print('\n\nloop out i c j lines', i, c, j, lines)
+    while i < c and j < lines:# iter block
+        line = block[j]
+        print('line',line)
+        k = 0
+        print('\nloop in i c k len(line)', i, c, k, len(line))
+        while i < c and k < len(line):
+            if  line[k].find('.') >= 0:
+                i += 1
+                print('judge, i, c', i, c)
+                if i == c:
+                    print('found', a-1, b-1, j, k)
+                    found_flag = True
+                    break
+            k += 1; print('k+1', k)
+        if found_flag:
+            break
+        j += 1; print('j+1', j)
+    print('end')
+    print(a-1, b-1, j, k)
+    print(data[a-1][b-1][j][k])
 
 
 
