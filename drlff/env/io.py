@@ -82,7 +82,7 @@ class ffield(object):
         self.parsed['data'] = seped
 
 
-def find(a, b, c, data = ff.parsed['data']):
+def find(a, b, c, data):
     block = data[a - 1][b-1] # return a-1, b-1, j, k for block[j][k]
     print('block',block)
     lines = len(block)
@@ -117,6 +117,7 @@ def main():
     from drlff.conf import files_input
 
     data = ffield(files_input['ffield'])
+    return data
 
 
 if __name__ == '__main__':
