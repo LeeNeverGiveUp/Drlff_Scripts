@@ -41,5 +41,5 @@ files_input = {
 }
 
 files_output = {
-    'log': os.path.expanduser()'~/.cache/drlff.log')
+    'log': os.path.expanduser('~/.cache/ga')
 }

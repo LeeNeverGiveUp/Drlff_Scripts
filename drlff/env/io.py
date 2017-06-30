@@ -157,7 +157,6 @@ class ffield(object):
 def main():
     from drlff.env.io import ffield
     from drlff.conf import files_input
-
     data = ffield(files_input['ffield'])
     return data
 
