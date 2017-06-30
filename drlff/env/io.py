@@ -1,5 +1,6 @@
 import pdb
 import re
+from copy import deepcopy
 # part, block, num
 
 
@@ -11,13 +12,13 @@ class ffield(object):
 
     def __init__(self, path):
         self.path = path
-        self.nothead = '\s*-?\d+'
-        self.sep = '^\s*-?\d+\s*(?:!.*)?$'
-        self.annotation = '\s*!.*'
+        self._nothead = '\s*-?\d+'
+        self._sep = '^\s*-?\d+\s*(?:!.*)?$'
+        self._annotation = '\s*!.*'
 
-        self.parser()
+        self._parser()
 
-    def parser(self):
+    def _parser(self):
         # read and separate data into parts
         self.parsed = {
             'head': [],
@@ -31,14 +32,14 @@ class ffield(object):
 
         ishead = True
         for index, line in enumerate(data):
-            if ishead and not re.match(self.nothead, line):
+            if ishead and not re.match(self._nothead, line):
                 self.parsed['head'].append(line)
             else:
                 ishead = False
-                if re.match(self.annotation, line):
+                if re.match(self._annotation, line):
                     self.parsed['annotation'].append((index, line))
                 else:
-                    if re.match(self.sep, line):
+                    if re.match(self._sep, line):
                         self.parsed['separter'].append([line])
                         self.parsed['data'].append([])
                     else:
@@ -81,35 +82,76 @@ class ffield(object):
                         seped[-1][-1].append(line)
         self.parsed['data'] = seped
 
+    def _find(self, a, b, c):
+        # return data index, convert params to list
+        # self.parsed['data'][a][b][c][d]
+        heads = 0
+        for i in self.parsed['data'][a-1][b-1][0]:
+            if i.find('.') >= 0:
+                break
+            else:
+                heads += 1
+        line_length = len(self.parsed['data'][a-1][b-1][0]) - heads
+        line_num = len(self.parsed['data'][a-1][b-1])
+        if c <= line_length:
+            return a-1, b-1, 0, c+heads-1
+        elif c > line_length * line_num:
+            raise IndexError('Indices out of range, ({a}, {b}, *{c}*) [1, {cc}]'.format(
+                a=a,
+                b=b,
+                c=c,
+                cc=line_length*line_num
+            ))
+        else:
+            return a-1, b-1, c//line_length, c % line_length - 1
 
-def find(a, b, c, data):
-    block = data[a - 1][b-1] # return a-1, b-1, j, k for block[j][k]
-    print('block',block)
-    lines = len(block)
-    i, j = [0] * 2
-    found_flag = False
-    print('\n\nloop out i c j lines', i, c, j, lines)
-    while i < c and j < lines:# iter block
-        line = block[j]
-        print('line',line)
-        k = 0
-        print('\nloop in i c k len(line)', i, c, k, len(line))
-        while i < c and k < len(line):
-            if  line[k].find('.') >= 0:
-                i += 1
-                print('judge, i, c', i, c)
-                if i == c:
-                    print('found', a-1, b-1, j, k)
-                    found_flag = True
-                    break
-            k += 1; print('k+1', k)
-        if found_flag:
-            break
-        j += 1; print('j+1', j)
-    print('end')
-    print(a-1, b-1, j, k)
-    print(data[a-1][b-1][j][k])
+    def __getitem__(self, key):
+        try:
+            if len(key) != 3:
+                raise KeyError('Length of Index must equal 3, given %d' % len(key))
+        except TypeError:
+            raise KeyError('Length of Index must equal 3, given %d' % len(key))
+        for i in key:
+            try:
+                int(i)
+            except ValueError:
+                raise TypeError('Indices must be integers, not {}'.format(type(i)))
+        indeces = self._find(*key)
+        return float(self.parsed['data'][indeces[0]][indeces[1]][indeces[2]][indeces[3]])
 
+    def __setitem__(self, key, value):
+        try:
+            float(value)
+        except ValueError as e:
+            raise ValueError(e)
+        try:
+            if len(key) != 3:
+                raise KeyError('Length of Index must equal 3, given %d' % len(key))
+        except TypeError:
+            raise KeyError('Length of Index must equal 3, given %d' % len(key))
+        for i in key:
+            try:
+                int(i)
+            except ValueError:
+                raise TypeError('Indices must be integers, not {}'.format(type(i)))
+        indeces = self._find(*key)
+        self.parsed['data'][indeces[0]][indeces[1]][indeces[2]][indeces[3]] = '{:8.4f}'.format(value)
+
+    def __str__(self):
+        parsed = deepcopy(self.parsed)
+        string = list()
+        string.append(''.join(parsed['head']))
+        string.append(''.join(parsed['separter'][0]))
+        for sep, dat in zip(parsed['separter'][1:], parsed['data']):
+            for i in dat:
+                for j in i:
+                    for index, number in enumerate(j):
+                        if number.find('.') >= 0:
+                            j[index] = '{:>8s}'.format(number)
+                    j.append('\n')
+                    string.append(' '.join(j))
+            string.append(''.join(sep))
+        return ''.join(string)
 
 
 def main():
