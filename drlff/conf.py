@@ -12,7 +12,7 @@ env = {
 # files_input = {
 #         'geo': '/home/charlesxu/Workspace/softs/GARFfield/test/reax/Cl2/unweighted/MPE/geo.new',
 #         'ffield': '/home/charlesxu/Workspace/softs/GARFfield/test/reax/Cl2/unweighted/MPE/ffield',
-#         'trainset.in': '/home/charlesxu/Workspace/softs/GARFfield/test/reax/Cl2/unweighted/MPE/trainset.in.new',
+#         'trainset': '/home/charlesxu/Workspace/softs/GARFfield/test/reax/Cl2/unweighted/MPE/trainset.in.new',
 #         'params': '/home/charlesxu/Workspace/softs/GARFfield/test/reax/Cl2/unweighted/MPE/params'
 #         }
 
@@ -20,7 +20,7 @@ env = {
 # files_input = {
 #     'geo': '/home/charles/Workspace/official/drlff/resources/MPE/geo.new',
 #     'ffield': '/home/charles/Workspace/official/drlff/resources/MPE/ffield',
-#     'trainset.in': '/home/charles/Workspace/official/drlff/resources/MPE/trainset.in.new',
+#     'trainset': '/home/charles/Workspace/official/drlff/resources/MPE/trainset.in.new',
 #     'params': '/home/charles/Workspace/official/drlff/resources/MPE/params'
 # }
 
@@ -28,7 +28,7 @@ env = {
 # files_input = {
 #     'geo': '/data/data/com.termux/files/home/Gits/drlff/data/MPE/geo.new',
 #     'ffield': '/data/data/com.termux/files/home/Gits/drlff/data/MPE/ffield',
-#     'trainset.in': '/data/data/com.termux/files/home/Gits/drlff/data/MPE/trainset.in.new',
+#     'trainset': '/data/data/com.termux/files/home/Gits/drlff/data/MPE/trainset.in.new',
 #     'params': '/data/data/com.termux/files/home/Gits/drlff/data/MPE/params'
 # }
 
@@ -36,7 +36,7 @@ env = {
 files_input = {
     'geo': os.path.join(example_input_path, 'geo.new'),
     'ffield': os.path.join(example_input_path, 'ffield'),
-    'trainset.in': os.path.join(example_input_path, 'trainset.in.new'),
+    'trainset': os.path.join(example_input_path, 'trainset.in.new'),
     'params': os.path.join(example_input_path, 'params')
 }
 
