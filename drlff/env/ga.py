@@ -9,3 +9,4 @@ pipe = subprocess.Popen(
      files_input['params']],
     env=env)
 print(env)
+pipe.wait()
