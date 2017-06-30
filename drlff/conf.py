@@ -3,7 +3,7 @@ import os
 conf_path = os.path.abspath(__file__)
 conf_dir = os.path.split(conf_path)[0]
 
-example_input_path = os.path.join(conf_dir, '../resources/MPE/')
+example_input_path = os.path.abspath(os.path.join(conf_dir, '../resources/MPE/'))
 # Environment variables, including running path of garffield, mpich, etc, and library of garffield.
 env = {
     'PATH': '/home/charlesxu/Workspace/softs/garffield/mpich/bin:/home/charlesxu/Workspace/softs/garffield/bin:/home/charlesxu/Workspace/softs/garffield/mpich/bin:/home/charlesxu/Workspace/softs/garffield/bin:/home/charlesxu/anaconda3/bin:/home/charlesxu/.userscripts:/home/charlesxu/.fzf/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games',
@@ -41,5 +41,5 @@ files_input = {
 }
 
 files_output = {
-    'log': '~/.cache/drlff.log'
+    'log': os.path.expanduser()'~/.cache/drlff.log')
 }
