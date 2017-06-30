@@ -45,3 +45,5 @@ rf_*
 .obs
 test_result
 build
+*.xyz
+*.0
