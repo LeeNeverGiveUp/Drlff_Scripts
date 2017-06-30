@@ -14,7 +14,9 @@ pipe = subprocess.Popen(
      files_input['geo'],
      files_input['ffield'],
      files_input['trainset'],
-     files_input['params']],
+     files_input['params'],
+    '-t 1',
+        '-p 2:w'],
     env=env,
     stdout = subprocess.PIPE
 )
