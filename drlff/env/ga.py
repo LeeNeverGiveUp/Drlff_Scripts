@@ -46,4 +46,4 @@ def run():
     del pipe
     with open(os.path.join(files_output['log'], 'drlff.ga.log'), 'a') as f:
         f.write(out.decode('utf-8'))
-    return get_error(os.path.join(files_input['dir'], 'trainset.err.initial'))
+    return -get_error(os.path.join(files_input['dir'], 'trainset.err.initial'))

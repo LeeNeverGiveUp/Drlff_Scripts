@@ -19,7 +19,7 @@ action_space = tuple(range(-len(scale_space), len(scale_space)+1))
 
 def act_parser(act):
     # [-len, len]
-    act = int(act)
+    act = int(act) - len(scale_space)
     if abs(act) > len(scale_space):
         raise ValueError('act out of range of %d' % len(scale_space))
     action = np.zeros(len(scale_space))
@@ -43,6 +43,7 @@ def reset():
     reward = ga.run()
 
     return state, reward, alive
+
 
 def render():
     with open('/tmp/drlff.log', 'a') as f:
