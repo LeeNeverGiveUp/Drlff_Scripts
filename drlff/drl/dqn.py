@@ -124,7 +124,10 @@ def main():
     # initialize env and dqn agent
     agent = DQN(env)
 
-    for episode in range(EPISODE):
+    episode = 0
+
+    while 1:
+        episode += 1
         # initialize task
         state, _, _ = env.reset()
         # Train

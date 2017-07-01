@@ -32,6 +32,9 @@ def step(act):
     alive = ffp + act_parser(act)
     state = ffp.value
     reward = ga.run()
+    print(state, reward, alive)
+    with open('/tmp/drlff.log', 'a') as f:
+        f.write(str((state, reward, alive)) + '\n')
 
     return state, reward, alive
 
@@ -41,10 +44,13 @@ def reset():
     state = ffp.value
     alive = True
     reward = ga.run()
+    with open('/tmp/drlff.log', 'a') as f:
+        f.write('reseted\n')
 
     return state, reward, alive
 
 
 def render():
+    return
     with open('/tmp/drlff.log', 'a') as f:
         f.write(str(step(0)) + '\n')
