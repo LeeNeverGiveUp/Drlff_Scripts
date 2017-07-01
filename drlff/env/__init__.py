@@ -36,7 +36,7 @@ def step(act):
     with open('/tmp/drlff.log', 'a') as f:
         f.write(str((state, reward, alive)) + '\n')
 
-    return state, reward, alive
+    return state, reward, 1-alive
 
 
 def reset():
@@ -47,7 +47,7 @@ def reset():
     with open('/tmp/drlff.log', 'a') as f:
         f.write('reseted\n')
 
-    return state, reward, alive
+    return state, reward, 1-alive
 
 
 def render():
