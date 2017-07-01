@@ -1,3 +1,9 @@
+"""Run GARFfield to get error
+Functions:
+    run() -> error
+
+    get_error(path) function: define the error by your own
+"""
 import os
 import re
 import subprocess
@@ -5,6 +11,8 @@ from drlff.conf import env, files_input, files_output
 
 
 def get_error(path):
+    """Define your own error function by read and parse file in "path"
+    """
     with open(path, 'r') as f:
         data = f.readlines()
 
@@ -12,6 +20,10 @@ def get_error(path):
 
 
 def run():
+    """Run GARFfield and get error
+    example:
+        err = run()
+    """
     if not os.path.isdir(files_output['log']):
         if os.path.exists(files_output['log']):
             os.remove(files_output['log'])

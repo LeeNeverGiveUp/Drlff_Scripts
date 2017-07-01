@@ -1,3 +1,30 @@
+"""files in and out
+usage:
+    ffp = io.main() # get ffield selected by params
+
+
+Classes:
+    ffield(path): Read, Write, ffield file
+        usage:
+            ff = ffield('ffield') # put in the ffield file path
+            ff[3, 10, 4] = 15.0 # give value indexed as "params" defined
+            val = ff[3, 10, 4] # get the value
+            print(str(ff)) # print the standard ffield filetype
+            ff.write() # write changes to opened file with the "path"
+            ff.reset() # reset the file with backuped file(cp .bak/ffield ffield), to use this, you
+                #should backup all input files to ".bak" folder
+            ff.reload() # reload ffield parameters from file
+
+    ff_params(params_path, ffield_path):select ff with params defined
+        usage:
+            ffp = ff_params('params', 'ffield')
+            list(ffp)
+
+        methods:
+            get_value()
+            set_value([1,2,3,4,5])
+            reset()
+"""
 import re
 import os
 from copy import deepcopy
@@ -187,6 +214,11 @@ class ff_params(object):
         ffp = ff_params('params', 'ffield')
         list(ffp)
 
+        # note: the "+" and "+=" do the same thing, just different in returns
+        ffp += [.1] * len(ffp)
+        ffp + [.1] * len(ffp)
+        ffp.value = [1] * 5
+
     methods:
         get_value()
         set_value([1,2,3,4,5])
@@ -224,12 +256,49 @@ class ff_params(object):
     def get_value(self):
         return [self.ff[i] for i in self.indices]
 
-    def set_value(self, value):
+    def set_value(self, value, judge=True):
+        """If judge if value is in range, returns in range -> True else false
+        if not judge always return True
+        """
         if len(value) != self.__len__():
             raise ValueError('Length of value is not agree with data')
+        in_range = True
+        if judge:
+            in_range = self.judge(value)
         for index, val in zip(self.indices, value):
             self.ff[index] = val
         self.ff.write()
+        return in_range
+
+    def __iadd__(self, other):
+        data = self.get_value()
+        self.set_value(list(map(lambda x: x[0] + x[1], zip(data, other))))
+        return self
+
+    def __add__(self, other):
+        data = self.get_value()
+        judged = self.set_value(list(map(lambda x: x[0] + x[1], zip(data, other))))
+        return judged
+
+    def __isub__(self, other):
+        data = self.get_value()
+        self.set_value(list(map(lambda x: x[0] - x[1], zip(data, other))))
+        return self
+
+    def __sub__(self, other):
+        data = self.get_value()
+        judged = self.set_value(list(map(lambda x: x[0] - x[1], zip(data, other))))
+        return judged
+
+    def judge(self, value):
+        '''Judge if the value is out of range
+        out of range, return False
+        in range, return True
+        '''
+        for rng, val in zip(self.range, value):
+            if val < rng[0] or val > rng[1]:
+                return False
+        return True
 
     def reset(self):
         self.ff.reset()
@@ -243,6 +312,15 @@ class ff_params(object):
     def __iter__(self):
         return iter(self.get_value())
 
+    @property
+    def value(self):
+        return self.get_value()
+
+    def __setattr__(self, name, value):
+        if name == 'value':
+            self.set_value(value)
+        else:
+            self.__dict__[name] = value
 
 
 def main():
