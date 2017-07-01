@@ -24,7 +24,7 @@ def act_parser(act):
         raise ValueError('act out of range of %d' % len(scale_space))
     action = np.zeros(len(scale_space))
     if act != 0:
-        action[abs(act) - 1] = sign(act)
+        action[abs(act) - 1] = np.sign(act)
     return action * scale_space
 
 
@@ -38,7 +38,12 @@ def step(act):
 
 def reset():
     ffp.reset()
+    state = ffp.value
     alive = True
     reward = ga.run()
 
     return state, reward, alive
+
+def render():
+    with open('/tmp/drlff.log', 'a') as f:
+        f.write(str(step(0)) + '\n')
