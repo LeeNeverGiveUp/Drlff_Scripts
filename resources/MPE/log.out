@@ -33,35 +33,3 @@ GARFfield force field parameter optimization framework, version 1.0
   No restarts (-R)
 == User changes to default settings ==
 >> -c = 50 (Use hillclimbing)
-
-2. READING REAXFF FORCE FIELD FILE: ffield ... 
-
-
-
-
-
->> Read in 738 parameters from ffield
-
-3. READING MOLECULAR GEOMETRY FILE: geo.new (bgf or xyz formats) ... 
->> Found 29 structures in geo.new
->> Found 29 restraints in geo.new
->> Finished reading structures from geo.new
->> Found 29 structures in geo.new
-
-4. READING TRAINING SET FILE: trainset.in.new... 
-WARNING: No valid charge training set data read from trainset.in.new.0!
-WARNING: No valid cell training set data read from trainset.in.new.0!
-WARNING: No valid cell stress training set data read from trainset.in.new.0!
-WARNING: No valid structure training set data read from trainset.in.new.0!
-WARNING: No valid rms force training set data read from trainset.in.new.0!
-WARNING: No valid atomic force training set data read from trainset.in.new.0!
->> Finished reading training set file trainset.in.new
->> There are 29 training cases in file trainset.in.new
-
-5. READING PARAMETERS FILE: params ...
->> Finished reading parameters to optimize from file params
->> Read 5 parameters from params
-6. START GA OPTIMIZATION (hill-climbing mode) ... good luck !!
-Iter #     Field      Index          Value      
-0          Init       0              1.81327
-10         Best       0              1.84721

@@ -1,0 +1,28 @@
+digraph drlff{
+//    rankdir=LR
+    node[shape=box]
+    subgraph cluster_drl{
+        label="Deep RL Agent"
+        rl[label="RL Agent", shape=oval, color=red, fontcolor=red]
+    }
+
+    subgraph cluster_ff{
+        label="Force Field Environment"
+        ga[label="Garffield"]
+        io
+        trainset[shape=circle, color=cyan]
+        geo[shape=circle, color=cyan]
+        ffield[shape=circle, color=cyan]
+        params[shape=circle, color=cyan]
+        {ffield, trainset, geo, params}{rank=same}
+    }
+
+    {ffield, trainset, geo, params} -> ga
+    ga -> io[label="error"]
+    io -> rl[label="state\n(from ffield and params)", color=cyan, fontcolor=cyan]
+    io -> rl[label="reward\n(from error)", color=cyan, fontcolor=cyan]
+    rl -> io[label="action\n(change of ff parameters)", color=red, fontcolor=red]
+    params -> io[color=cyan, fontcolor=cyan]
+    ffield -> io[label="state", fontcolor=cyan, color=cyan]
+    io -> ffield[label="do action\n(change parameters)", color=red, fontcolor=red]
+}
