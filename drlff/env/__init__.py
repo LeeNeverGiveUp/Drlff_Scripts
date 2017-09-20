@@ -18,7 +18,7 @@ action_space = tuple(range(-len(scale_space), len(scale_space)+1))
 
 
 def act_parser(act):
-    # [-len, len]
+    # [0, 2*len]
     act = int(act) - len(scale_space)
     if abs(act) > len(scale_space):
         raise ValueError('act out of range of %d' % len(scale_space))
