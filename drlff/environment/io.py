@@ -1,12 +1,13 @@
+#!/usr/bin/env python3
 """files in and out
 usage:
     ffp = io.main() # get ffield selected by params
 
 
 Classes:
-    ffield(path): Read, Write, ffield file
+    FField(path): Read, Write, ffield file
         usage:
-            ff = ffield('ffield') # put in the ffield file path
+            ff = FField('ffield') # put in the ffield file path
             ff[3, 10, 4] = 15.0 # give value indexed as "params" defined
             val = ff[3, 10, 4] # get the value
             print(str(ff)) # print the standard ffield filetype
@@ -15,14 +16,14 @@ Classes:
                 #should backup all input files to ".bak" folder
             ff.reload() # reload ffield parameters from file
 
-    ff_params(params_path, ffield_path):select ff with params defined
+    FF_params(params_path, ffield_path):select ff with params defined
         usage:
-            ffp = ff_params('params', 'ffield')
+            ffp = FF_params('params', 'ffield')
             list(ffp)
 
         methods:
-            get_value()
-            set_value([1,2,3,4,5])
+            _get_params()
+            _set_params([1,2,3,4,5])
             reset()
 """
 import re
@@ -32,7 +33,7 @@ import shutil
 # part, block, num
 
 
-class ffield(object):
+class FField(object):
     """ Read, Write, ffield file
     usage:
         ff = ffield('ffield') # put in the ffield file path
@@ -140,24 +141,24 @@ class ffield(object):
         # return data index, convert params to list
         # self.parsed['data'][a][b][c][d]
         heads = 0
-        for i in self.parsed['data'][a-1][b-1][0]:
+        for i in self.parsed['data'][a - 1][b - 1][0]:
             if i.find('.') >= 0:
                 break
             else:
                 heads += 1
-        line_length = len(self.parsed['data'][a-1][b-1][0]) - heads
-        line_num = len(self.parsed['data'][a-1][b-1])
+        line_length = len(self.parsed['data'][a - 1][b - 1][0]) - heads
+        line_num = len(self.parsed['data'][a - 1][b - 1])
         if c <= line_length:
-            return a-1, b-1, 0, c+heads-1
+            return a - 1, b - 1, 0, c + heads - 1
         elif c > line_length * line_num:
             raise IndexError('Indices out of range, ({a}, {b}, *{c}*) [1, {cc}]'.format(
                 a=a,
                 b=b,
                 c=c,
-                cc=line_length*line_num
+                cc=line_length * line_num
             ))
         else:
-            return a-1, b-1, c//line_length, c % line_length - 1
+            return a - 1, b - 1, c // line_length, c % line_length - 1
 
     def __getitem__(self, key):
         try:
@@ -208,10 +209,10 @@ class ffield(object):
         return ''.join(string)
 
 
-class ff_params(object):
+class FF_params(object):
     """select ff with params defined
     usage:
-        ffp = ff_params('params', 'ffield')
+        ffp = FF_params('params', 'ffield')
         list(ffp)
 
         # note: the "+" and "+=" do the same thing, just different in returns
@@ -220,9 +221,10 @@ class ff_params(object):
         ffp.value = [1] * 5
 
     methods:
-        get_value()
-        set_value([1,2,3,4,5])
+        _get_params()
+        _set_params([1,2,3,4,5])
         reset()
+        judge(value) judge if params exceed the limits
     """
 
     def __init__(self, params_path, ffield_path):
@@ -248,15 +250,15 @@ class ff_params(object):
         self.range = tuple(zip(*transposed[4:]))
 
         # ffield data
-        self.ff = ffield(ffield_path)
+        self.ff = FField(ffield_path)
 
     def __len__(self):
         return len(self.scale)
 
-    def get_value(self):
+    def _get_params(self):
         return [self.ff[i] for i in self.indices]
 
-    def set_value(self, value, judge=True):
+    def _set_params(self, value, judge=True):
         """If judge if value is in range, returns in range -> True else false
         if not judge always return True
         """
@@ -271,23 +273,23 @@ class ff_params(object):
         return in_range
 
     def __iadd__(self, other):
-        data = self.get_value()
-        self.set_value(list(map(lambda x: x[0] + x[1], zip(data, other))))
+        data = self._get_params()
+        self._set_params(list(map(lambda x: x[0] + x[1], zip(data, other))))
         return self
 
     def __add__(self, other):
-        data = self.get_value()
-        judged = self.set_value(list(map(lambda x: x[0] + x[1], zip(data, other))))
+        data = self._get_params()
+        judged = self._set_params(list(map(lambda x: x[0] + x[1], zip(data, other))))
         return judged
 
     def __isub__(self, other):
-        data = self.get_value()
-        self.set_value(list(map(lambda x: x[0] - x[1], zip(data, other))))
+        data = self._get_params()
+        self._set_params(list(map(lambda x: x[0] - x[1], zip(data, other))))
         return self
 
     def __sub__(self, other):
-        data = self.get_value()
-        judged = self.set_value(list(map(lambda x: x[0] - x[1], zip(data, other))))
+        data = self._get_params()
+        judged = self._set_params(list(map(lambda x: x[0] - x[1], zip(data, other))))
         return judged
 
     def judge(self, value):
@@ -304,32 +306,31 @@ class ff_params(object):
         self.ff.reset()
 
     def __repr__(self):
-        return str(self.get_value())
+        return '<Force Field Parameters: ' + str(self._get_params()) + '>'
 
     def __str__(self):
         return self.__repr__()
 
     def __iter__(self):
-        return iter(self.get_value())
+        return iter(self._get_params())
 
     @property
     def value(self):
-        return self.get_value()
+        return self._get_params()
 
     def __setattr__(self, name, value):
         if name == 'value':
-            self.set_value(value)
+            self._set_params(value)
         else:
             self.__dict__[name] = value
 
 
 def main():
-    from drlff.env.io import ffield
     from drlff.conf import files_input
     ffield_path = os.path.join(files_input['dir'], files_input['ffield'])
     params_path = os.path.join(files_input['dir'], files_input['params'])
 
-    ffp = ff_params(params_path, ffield_path)
+    ffp = FF_params(params_path, ffield_path)
     return ffp
 
 

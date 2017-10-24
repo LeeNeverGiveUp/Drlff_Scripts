@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Run GARFfield to get error
 Functions:
     run() -> error
@@ -8,6 +9,11 @@ import os
 import re
 import subprocess
 from drlff.conf import env, files_input, files_output
+
+
+for environ in ['PATH', 'LD_LIBRARY_PATH']:
+    if environ in os.environ:
+        env['PATH'] = ':'.join((os.environ['PATH'], env['PATH']))
 
 
 def get_error(path):
@@ -46,4 +52,4 @@ def run():
     del pipe
     with open(os.path.join(files_output['log'], 'drlff.ga.log'), 'a') as f:
         f.write(out.decode('utf-8'))
-    return -get_error(os.path.join(files_input['dir'], 'trainset.err.initial'))
+    return get_error(os.path.join(files_input['dir'], 'trainset.err.initial'))
